@@ -8,7 +8,7 @@ on:
 
 
 env:
-  MANIFEST: https://github.com/PitchBlackRecoveryProject/manifest_pb.git
+  MANIFEST: https://github.com/PitchBlackRecoveryProject/manifest_pb
   MANIFEST_BRANCH: android-11.0
   DEVICE: camellia
   DT_LINK: https://github.com/willzyx-hub/pbrp_device_xiaomi_camellia
