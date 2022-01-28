@@ -47,9 +47,10 @@ jobs:
              mkdir work
              cd work
              repo init -u $MANIFEST -b $MANIFEST_BRANCH --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
+             sudo git clone -b $DT LINK --depth=1 --single-branch $DT_PATH
+
              repo sync -j1 --fail-fast
             
-            git clone $DT_LINK --depth=1 $DT_PATH 
              
        - name: Build
          run: |
