@@ -11,7 +11,7 @@ on:
     types: [started]
 
 env:
-  MANIFEST: https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-11.0
+  MANIFEST: https://github.com/a7one/manifest_pb -b android-11.0
   MANIFEST_BRANCH: android-11.0
   DEVICE: camellia
   DT_LINK: https://github.com/a7one/pbrp_device_xiaomi_camellia
