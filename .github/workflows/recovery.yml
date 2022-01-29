@@ -44,23 +44,34 @@ jobs:
             
        - name: Sync recovery source and device tree
          run: |
+             PATH=~/bin:$PATH
              mkdir work
              cd work
-             repo init -u $MANIFEST -b $MANIFEST_BRANCH --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-             repo sync -j4
-             git clone $DT_LINK --depth=1 --single-branch $DT_PATH
+             repo init -u $MANIFEST --depth=1 
+             repo sync -c -j8 --force-sync --no-clone-bundle --no-tags
+             rm -rf .repo
              
-       - name: Build
-         run: |
-              cd work
-              . build/envsetup.sh && lunch omni_$DEVICE-eng && export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
+    
+       - name: checkout device tree
+         uses: actions/checkout@v2
+         with:
+          path: work/device/xiaomi/camellia
+          
+    - name: Build
+        run: |
+         PATH=~/bin:$PATH
+           cd work
+           export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch omni_$DEVICE-eng && mka $TARGET -j2
+           cp  out/target/product/camellia/boot.img    out/target/product/camellia/boot-camellia-main-$(date +"%Y%m%d-%H%M").img           
+                 
              
-       - uses: actions/upload-artifact@v2
+       - name: Release recovery image
+         uses: softprops/action-gh-release@v1
+         env:
+          GITHUB_TOKEN: ${{ secrets.TEST }}
          with:
-          name: recoveryzip
-          path: work/out/target/product/*/*.zip
-
-       - uses: actions/upload-artifact@v2
-         with:
-          name: recoveryimage
-          path: work/out/target/product/*/*.img
+          tag_name: camellia-pbrp-main
+          name: main
+          files: | 
+            twrp/out/target/product/Note_11P/boot*.img     
+            
