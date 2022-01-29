@@ -34,7 +34,7 @@ git config --global user.name "a7one"
             sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
             sudo chmod a+rx /usr/local/bin/repo
              
-        - name: Sync recovery source and device tree
+        - name: Sync recovery Source and device tree
           run: |
            PATH=~/bin:$PATH
            mkdir work
